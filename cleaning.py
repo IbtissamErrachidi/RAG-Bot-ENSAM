@@ -1,47 +1,39 @@
 import re
 
-def clean_text_keep_urls(text):
-    # Trouver toutes les URLs (http, https)
-    url_pattern = r'https?://[^\s,;]+'
-    urls = re.findall(url_pattern, text)
+def clean_text_keep_lines_and_paragraphs(text):
+    # 1. Supprimer balises HTML
+    text = re.sub(r'<[^>]+>', '', text)
 
-    # Supprimer les URLs du texte
-    text_no_urls = re.sub(url_pattern, '', text)
+    # 2. Supprimer emails
+    text = re.sub(r'\S+@\S+\.\S+', '', text)
 
-    # Nettoyer le texte restant
+    # 3. Supprimer numéros de téléphone (formats simples)
+    text = re.sub(r'(\+?\d{1,3}[-.\s]?)?(\(?\d{2,4}\)?[-.\s]?)?[\d\s\-]{5,}', '', text)
 
-    # Supprimer balises HTML
-    text_no_urls = re.sub(r'<[^>]+>', '', text_no_urls)
+    # 4. Protéger doubles sauts de ligne
+    text = text.replace('\n\n', '<<PARA>>')
 
-    # Supprimer emails
-    text_no_urls = re.sub(r'\S+@\S+\.\S+', '', text_no_urls)
+    # 5. Protéger sauts de ligne simples restants
+    text = text.replace('\n', '<<LINE>>')
 
-    # Supprimer numéros de téléphone (formats simples)
-    text_no_urls = re.sub(r'(\+?\d{1,3}[-.\s]?)?(\(?\d{2,4}\)?[-.\s]?)?[\d\s\-]{5,}', '', text_no_urls)
+    # 6. Remplacer tous les autres espaces blancs par un espace
+    text = re.sub(r'\s+', ' ', text)
 
-    # Remplacer espaces multiples, retours à la ligne multiples par un espace simple
-    text_no_urls = re.sub(r'\s+', ' ', text_no_urls)
+    # 7. Remettre les sauts simples
+    text = text.replace('<<LINE>>', '\n')
 
-    # Supprimer caractères invisibles / non imprimables
-    text_no_urls = ''.join(ch for ch in text_no_urls if ch.isprintable() or ch.isspace())
+    # 8. Remettre les doubles sauts de ligne
+    text = text.replace('<<PARA>>', '\n\n')
 
-    # Supprimer espaces en début/fin
-    text_no_urls = text_no_urls.strip()
+    # 9. Supprimer espaces en début/fin
+    text = text.strip()
 
-    # Réinjecter les URLs, une par ligne à la fin du texte nettoyé
-    if urls:
-        clean_text = text_no_urls + '\n' + '\n'.join(urls)
-    else:
-        clean_text = text_no_urls
-
-    return clean_text
+    return text
 
 
-filename = 'infos_txt/ENSAM_lista_complementaire_admis_prep_int.txt.txt'
+# filename = 'infos_txt/ENSAM CASA - Projet FINCOM.txt'
 
-with open(filename, encoding='utf-8') as f:
-    raw_text = f.read()
-
-
-cleaned = clean_text_keep_urls(raw_text)
-print(cleaned)
+# with open(filename, encoding='utf-8') as f:
+#     raw_text = f.read()
+    
+#print(clean_text_keep_lines_and_paragraphs(raw_text))

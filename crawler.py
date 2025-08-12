@@ -19,6 +19,37 @@ def run_crawler():
             s = s[:100]
         return s
 
+    def process_page(url, soup):
+        image_exts = ('.jpeg', '.jpg', '.png', '.gif', '.bmp', '.svg', '.webp')
+        pdf_ext = '.pdf'
+
+        for a in soup.find_all('a', href=True):
+            href = a['href']
+            abs_href = urljoin(url, href)
+
+            href_lower = href.lower()
+
+            if href_lower.endswith(pdf_ext):
+                # Remplacer le lien PDF par texte + (PDF: url)
+                new_text = f"{a.get_text(strip=True)} (PDF: {abs_href})"
+                a.replace_with(new_text)
+
+            elif href_lower.endswith(image_exts):
+                # Pour les images, on insère le texte spécial devant le texte du lien
+                # Ex: "->Télécharger l'affiche<-" devient
+                # "Voici le lien vers l'image : URL ->Télécharger l'affiche<-"
+
+                original_text = a.get_text(strip=True)
+                new_text = f"Voici le lien vers l'image : {abs_href} {original_text}"
+                a.replace_with(new_text)
+
+        # Extraire le texte modifié
+        if soup.body:
+            text = soup.body.get_text(separator='\n', strip=True)
+        else:
+            text = ''
+        return text
+
     while to_visit:
         url = to_visit.pop(0)
         if url in visited:
@@ -32,34 +63,15 @@ def run_crawler():
             title = soup.title.string if soup.title else 'no_title'
             title = clean_filename(title)
 
-            # Chercher un lien PDF sur la page
-            pdf_link = None
-            for a in soup.find_all('a', href=True):
-                href = a['href']
-                if href.lower().endswith('.pdf'):
-                    pdf_link = urljoin(url, href)
-                    break
+            text = process_page(url, soup)
 
-            if pdf_link:
-                # Si PDF trouvé, on sauve juste le lien dans un fichier texte
-                file_path = os.path.join(output_dir, f"{title}_pdf_link.txt")
+            if text.strip():
+                file_path = os.path.join(output_dir, f"{title}.txt")
                 with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(pdf_link)
-                print(f"PDF trouvé, sauvegarde du lien: {file_path}")
+                    f.write(text)
+                print(f"Texte sauvegardé avec liens PDF et images insérés : {file_path}")
             else:
-                # Sinon, extraire le texte
-                if soup.body:
-                    text = soup.body.get_text(separator='\n', strip=True)
-                else:
-                    text = ''
-
-                if text:
-                    file_path = os.path.join(output_dir, f"{title}.txt")
-                    with open(file_path, 'w', encoding='utf-8') as f:
-                        f.write(text)
-                    print(f"Texte sauvegardé: {file_path}")
-                else:
-                    print("Page sans texte ni PDF, pas de fichier créé.")
+                print("Page vide, pas de fichier créé.")
 
             # Ajouter les liens à visiter
             for link in soup.find_all('a', href=True):
@@ -70,3 +82,6 @@ def run_crawler():
         except Exception as e:
             print(f'Failed to crawl {url}: {e}')
         visited.add(url)
+
+if __name__ == '__main__':
+    run_crawler()

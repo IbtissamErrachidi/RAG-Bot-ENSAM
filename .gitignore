@@ -9,6 +9,7 @@ venv/
 .env
 
 infos_txt/
+test/
 
 # OS-specific
 .DS_Store
