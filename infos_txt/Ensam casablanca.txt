@@ -1,0 +1,6 @@
+Réinitialiser le mot de passe
+Entrez votre email
+Email
+@
+Please enter your email.
+Envoyer
