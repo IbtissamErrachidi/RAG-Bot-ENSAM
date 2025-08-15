@@ -23,18 +23,3 @@ def search_and_display(query, index, indexed_chunks, k=5):
 
     return context_chunks
 
-# --- Modèle génératif (ex: T5) ---
-gen_tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-base")
-gen_model = AutoModelForSeq2SeqLM.from_pretrained("google/flan-t5-base")
-
-    def generate_answer(context_chunks, question):
-
-    # Construire un prompt avec les chunks récupérés
-    context_text = "\n---\n".join([chunk['content'] for chunk in context_chunks])
-    prompt = f"Informations :\n{context_text}\n\nQuestion : {question}\nRéponse :"
-    
-    inputs = gen_tokenizer(prompt, return_tensors="pt", truncation=True, max_length=512)
-    outputs = gen_model.generate(**inputs, max_length=256, num_beams=5, no_repeat_ngram_size=2, early_stopping=True)
-    answer = gen_tokenizer.decode(outputs[0], skip_special_tokens=True)
-    
-    return answer
