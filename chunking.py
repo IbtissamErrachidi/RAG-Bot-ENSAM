@@ -1,7 +1,7 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
-def chunk_text(text, chunk_size=500, chunk_overlap=50, separators=None):
+def chunk_text(text, chunk_size=800, chunk_overlap=100, separators=None):
     if separators is None:
         separators = ["\n\n","\n", "- ", "> ", ".", "!", "?", " ", ""]
 
