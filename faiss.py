@@ -8,5 +8,5 @@ def create_faiss_index(indexed_chunks):
     index = faiss.IndexFlatL2(dimension)
     index.add(embeddings_np)
 
-    print(f"Index FAISS créé avec {index.ntotal} vecteurs")
     return index
+
