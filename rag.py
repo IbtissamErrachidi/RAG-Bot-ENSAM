@@ -10,10 +10,7 @@ from config import GEMINI_API_KEY
 
 
 def build_gemini_conversational_chain(retriever, model_name="gemini-2.5-flash"):
-    """
-    Crée une chaîne RAG conversationnelle utilisant Gemini 2.5 Pro
-    avec un prompt spécialisé ENSAM Casablanca.
-    """
+
 
     llm = ChatGoogleGenerativeAI(
         model=model_name,
