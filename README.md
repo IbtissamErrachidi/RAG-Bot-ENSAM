@@ -81,6 +81,7 @@ chat-ensam/
 ├─ config.py                   # API key configuration
 ├─ requirements.txt            # Python dependencies
 └─ README.md
+``` 
 
 
 
