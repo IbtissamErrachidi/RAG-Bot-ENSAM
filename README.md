@@ -32,3 +32,32 @@ The chatbot leverages:
 ```bash
 git clone https://github.com/IbtissamErrachidi/RAG-Bot-ENSAM.git
 cd RAG-Bot-ENSAM
+``` 
+
+2. **Create a virtual environment and install dependencies:**
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+venv\Scripts\activate     # Windows
+
+pip install -r requirements.txt
+``` 
+
+
+3. **Add your Gemini API key:**
+
+- Create a .env file:
+GEMINI_API_KEY=your_api_key_here
+
+
+4. **Prepare your documents:**
+   
+
+
+5. **Run the App:**
+   
+```bash
+streamlit run main.py
+``` 
+- Open the link displayed in your browser to interact with the chatbot.
