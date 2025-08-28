@@ -8,7 +8,7 @@ def update_corpus1():
     tmp_dir = "infos_txt_new"
     prod_dir = "infos_txt"
 
-    # Clean temp folder
+
     if os.path.exists(tmp_dir):
         shutil.rmtree(tmp_dir)
     os.makedirs(tmp_dir, exist_ok=True)
@@ -22,10 +22,14 @@ def update_corpus1():
     vectordb = build_vectordb(chunks, model_name="sentence-transformers/all-MiniLM-L6-v2")
     vectordb.save_local("vectordb_local_new")
 
-    # Swap directories atomically
+
     if os.path.exists(prod_dir):
         shutil.rmtree(prod_dir)
-    os.rename(tmp_dir, prod_dir)
+    if os.path.exists(tmp_dir):
+        os.rename(tmp_dir, prod_dir)
+    else:
+        print(f"Le dossier temporaire {tmp_dir} n'existe pas, saut du rename.")
+
 
     if os.path.exists("vectordb_local"):
         shutil.rmtree("vectordb_local")
