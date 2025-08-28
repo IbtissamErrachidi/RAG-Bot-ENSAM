@@ -2,9 +2,9 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import ChatPromptTemplate
-import os
-import google.generativeai as genai
 from config import GEMINI_API_KEY
+import os
+
 
 
 
