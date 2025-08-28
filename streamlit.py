@@ -56,8 +56,7 @@ def send_message():
     if query:
         with st.spinner("💬 Chat en cours..."):
             with vectordb_lock:
-                response = st.session_state.chain.run(query)
-           
+                response = st.session_state.chain.invoke(query)    #or run
             st.session_state.chat_history.append((query, response))
         st.session_state.user_input = ""
 
