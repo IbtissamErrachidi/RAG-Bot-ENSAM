@@ -74,7 +74,7 @@ chat-ensam/
 ├─ vectordb_local/             # Saved FAISS index
 │── infos_txt_new/             # documents retrieved by the crawler
 ├─ chunks.py                   # Load and split text documents
-├─ cleaning.py                 # Document cleaning functions
+├─ wrap_documents.py           # re-wrapping the documents
 ├─ vector.py                   # Build and save the FAISS vector database
 ├─ retriever.py                # Retrieve the most relevant chunks
 ├─ rag.py                      # Gemini-2.5 conversational chain
@@ -91,7 +91,7 @@ chat-ensam/
 ##  Main Modules
 
 - **chunks.py** – loads documents and splits them into chunks.  
-- **cleaning.py** – cleans the documents (removing unwanted characters, normalization, etc.).  
+- **wrap_documents.py** – re-wrapping the documents.  
 - **vector.py** – creates and saves the FAISS vector database from chunks.  
 - **retriever.py** – retrieves the top-k most similar chunks for a query.  
 - **rag.py** – builds the Gemini-2.5 conversational chain with memory.  
@@ -106,6 +106,27 @@ chat-ensam/
 2. The chatbot retrieves relevant documents from the knowledge base.  
 3. A contextual answer is generated strictly from the corpus.  
 4. The conversation history is displayed below the chat.  
+
+## Automatic Crawling & Corpus Update
+
+To keep the chatbot always up to date with the latest information from the **ENSAM Casablanca** website, the project integrates an automatic crawling mechanism:
+
+### Crawling
+A crawler (`crawler.py`) visits pages on the ENSAM website and extracts textual content.  
+- Links to PDFs and images are **not downloaded**; instead, they are converted into descriptive text pointing to the URL.  
+- Each page’s text is saved as a `.txt` file in a temporary folder `infos_txt_new/`.
+
+### Processing & Indexing
+The text files are prepared, chunked, and embedded into a new FAISS index (`vectordb_local_new/`).
+
+### Hot Swap
+Once the new index is ready, it **replaces the old version** (`infos_txt/` and `vectordb_local/`) without interrupting the chatbot.
+
+### Scheduling
+The update runs automatically **every 45 minutes** (for testing purposes).  
+- In reality, this interval can be set to **every 2 days** or another longer period to better match actual website update frequency.
+
+
 
 
 ##  Configurable Parameters
