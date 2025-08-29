@@ -1,6 +1,6 @@
 # Chat ENSAM Casablanca
 
-An intelligent chatbot for answering questions about **ENSAM Casablanca**, based on a **RAG (Retrieval-Augmented Generation)** system using **Google Gemini-2.5**.
+An intelligent chatbot powered by **Retrieval-Augmented Generation (RAG)**, designed to answer students’ questions using the official content of **ENSAM Casablanca’s website**.
 
 
 ## Project Description
@@ -21,6 +21,7 @@ The chatbot leverages:
 - Cleaning and splitting documents into **chunks** for better retrieval.
 - Indexing with **FAISS** for similarity search.
 - Contextual conversation with **chat memory**.
+- Automatic crawling of ENSAM Casablanca website every 45 minutes.
 - Answers strictly based on the provided knowledge base.
 - Simple and interactive Streamlit interface.
 
@@ -71,13 +72,14 @@ chat-ensam/
 │
 ├─ infos_txt/                  # Text files for the knowledge base
 ├─ vectordb_local/             # Saved FAISS index
-│
+│── infos_txt_new/             # documents retrieved by the crawler
 ├─ chunks.py                   # Load and split text documents
 ├─ cleaning.py                 # Document cleaning functions
 ├─ vector.py                   # Build and save the FAISS vector database
 ├─ retriever.py                # Retrieve the most relevant chunks
 ├─ rag.py                      # Gemini-2.5 conversational chain
-├─ main.py                     # Streamlit interface
+├─ update_corpus.py            # Automatic crawling and corpus updating
+├─ streamlit.py                # Streamlit interface
 ├─ config.py                   # API key configuration
 ├─ requirements.txt            # Python dependencies
 └─ README.md
@@ -93,7 +95,8 @@ chat-ensam/
 - **vector.py** – creates and saves the FAISS vector database from chunks.  
 - **retriever.py** – retrieves the top-k most similar chunks for a query.  
 - **rag.py** – builds the Gemini-2.5 conversational chain with memory.  
-- **main.py** – Streamlit interface for asking questions and displaying chat history.  
+- **streamlit.py** – Streamlit interface for asking questions and displaying chat history.
+- **update_corpus.py** – manages crawling, chunking, embedding, and replacing corpus.  
 
 
 
@@ -122,7 +125,8 @@ chat-ensam/
 - **FAISS** – Similarity search  
 - **HuggingFace Embeddings**  
 - **Google Gemini LLM**  
-- **python-dotenv** – API key management  
+- **python-dotenv** – API key management
+- **schedule** – background automatic crawling
 
 ---
 
