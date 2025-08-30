@@ -78,6 +78,7 @@ chat-ensam/
 ├─ vector.py                   # Build and save the FAISS vector database
 ├─ retriever.py                # Retrieve the most relevant chunks
 ├─ rag.py                      # Gemini-2.5 conversational chain
+├─ crawler.py                  # Web crawler to extract text & links from ENSAM website
 ├─ update_corpus.py            # Automatic crawling and corpus updating
 ├─ streamlit.py                # Streamlit interface
 ├─ config.py                   # API key configuration
@@ -96,7 +97,9 @@ chat-ensam/
 - **retriever.py** – retrieves the top-k most similar chunks for a query.  
 - **rag.py** – builds the Gemini-2.5 conversational chain with memory.  
 - **streamlit.py** – Streamlit interface for asking questions and displaying chat history.
-- **update_corpus.py** – manages crawling, chunking, embedding, and replacing corpus.  
+- **update_corpus.py** – manages crawling, chunking, embedding, and replacing corpus.
+- - **crawler.py** – visits ENSAM Casablanca website pages, extracts visible text, replaces PDF/image links with descriptive text, and saves each page as `.txt` files in `infos_txt_new/`.  
+
 
 
 
@@ -148,6 +151,8 @@ The update runs automatically **every 45 minutes** (for testing purposes).
 - **Google Gemini LLM**  
 - **python-dotenv** – API key management
 - **schedule** – background automatic crawling
+- **requests** – HTTP requests for crawling  
+- **BeautifulSoup (bs4)** – HTML parsing for extracting text & links
 
 ---
 
