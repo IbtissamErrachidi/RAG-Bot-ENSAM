@@ -18,6 +18,7 @@ def update_corpus1():
     chunks = load_and_chunk_texts(tmp_dir)
     if not chunks:
         print("⚠️ Aucun chunk généré, le corpus n’a pas été mis à jour.")
+        shutil.rmtree(tmp_dir)
         return
     vectordb = build_vectordb(chunks, model_name="sentence-transformers/all-MiniLM-L6-v2")
     vectordb.save_local("vectordb_local_new")
@@ -31,6 +32,11 @@ def update_corpus1():
         print(f"Le dossier temporaire {tmp_dir} n'existe pas, saut du rename.")
 
 
-    if os.path.exists("vectordb_local"):
-        shutil.rmtree("vectordb_local")
-    os.rename("vectordb_local_new", "vectordb_local")
+    if os.path.exists("vectordb_local_new"):
+        if os.path.exists("vectordb_local"):
+            shutil.rmtree("vectordb_local")
+        os.rename("vectordb_local_new", "vectordb_local")
+    else:
+        print("⚠️ Vectordb local non généré, le vectordb n'a pas été remplacé.")
+
+    print("✅ Corpus mis à jour avec succès.")
