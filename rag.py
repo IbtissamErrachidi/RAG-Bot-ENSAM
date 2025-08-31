@@ -14,7 +14,7 @@ def build_gemini_conversational_chain(retriever, model_name="gemini-2.5-flash"):
 
     llm = ChatGoogleGenerativeAI(
         model=model_name,
-        temperature=0,
+        temperature=0.5,
         api_key=os.environ.get("GEMINI_API_KEY") 
     )
 
