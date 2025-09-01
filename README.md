@@ -53,11 +53,9 @@ pip install -r requirements.txt
 GEMINI_API_KEY=your_api_key_here
 
 
-4. **Prepare your documents:**
    
 
-
-5. **Run the App:**
+4. **Run the App:**
    
 ```bash
 streamlit run main.py
@@ -121,15 +119,12 @@ chat-ensam/
 | `/`      | GET    | Returns a simple message to verify the API is running. |
 | `/chat`  | POST   | Sends a question and receives an answer from the RAG chatbot. |
 
----
 
 ### Root Endpoint
 
 **GET /**
 
 - Returns a simple message to verify the API is running.
-
----
 
 ### Chat Endpoint
 
@@ -142,7 +137,7 @@ Content-Type: `application/json`
 {
   "question": "Bonjour"
 }
-
+```
 
 **Example Response:**
 
@@ -154,14 +149,13 @@ Content-Type: `application/json`
 
 ### Testing with cURL
 ```bash
-Copy code
 curl -X POST "http://127.0.0.1:8000/chat" \
 -H "Content-Type: application/json" \
 -d "{\"question\": \"Bonjour\"}"
 ```
-### Notes
--The FastAPI server uses the same vector database and RAG pipeline as the Streamlit app.
--Corpus updates via the scheduled crawler will automatically be reflected in the API responses.
+#### Notes
+- The FastAPI server uses the same vector database and RAG pipeline as the Streamlit app.
+- Corpus updates via the scheduled crawler will automatically be reflected in the API responses.
 
 ## Automatic Crawling & Corpus Update
 
