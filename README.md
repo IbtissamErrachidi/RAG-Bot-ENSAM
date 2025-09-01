@@ -126,7 +126,10 @@ chat-ensam/
 
 - Returns a simple message to verify the API is running :
 
-<img width="757" height="278" alt="image" src="https://github.com/user-attachments/assets/352aeb5c-7af0-41c2-96dc-95b2e0b2d9b6" />
+**Actual Response:**
+
+<img width="1381" height="202" alt="image" src="https://github.com/user-attachments/assets/2ef8fff6-04ec-4f3e-a962-042461d55f36" />
+
 
 ### Chat Endpoint
 
