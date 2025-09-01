@@ -81,6 +81,7 @@ chat-ensam/
 ├─ crawler.py                  # Web crawler to extract text & links from ENSAM website
 ├─ update_corpus.py            # Automatic crawling and corpus updating
 ├─ streamlit.py                # Streamlit interface
+├─ app.py                      # FastAPI REST API
 ├─ config.py                   # API key configuration
 ├─ requirements.txt            # Python dependencies
 └─ README.md
@@ -98,7 +99,8 @@ chat-ensam/
 - **rag.py** – builds the Gemini-2.5 conversational chain with memory.  
 - **streamlit.py** – Streamlit interface for asking questions and displaying chat history.
 - **update_corpus.py** – manages crawling, chunking, embedding, and replacing corpus.
-- - **crawler.py** – visits ENSAM Casablanca website pages, extracts visible text, replaces PDF/image links with descriptive text, and saves each page as `.txt` files in `infos_txt_new/`.  
+- - **crawler.py** – visits ENSAM Casablanca website pages, extracts visible text, replaces PDF/image links with descriptive text, and saves each page as `.txt` files in `infos_txt_new/`.
+  - **app.py** – FastAPI interface to programmatically query the chatbot.
 
 
 
@@ -108,7 +110,57 @@ chat-ensam/
 1. Type your question in the input field.  
 2. The chatbot retrieves relevant documents from the knowledge base.  
 3. A contextual answer is generated strictly from the corpus.  
-4. The conversation history is displayed below the chat.  
+4. The conversation history is displayed below the chat.
+
+## REST API
+
+### Endpoints Overview
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/`      | GET    | Returns a simple message to verify the API is running. |
+| `/chat`  | POST   | Sends a question and receives an answer from the RAG chatbot. |
+
+---
+
+### Root Endpoint
+
+**GET /**
+
+- Returns a simple message to verify the API is running.
+
+---
+
+### Chat Endpoint
+
+**POST /chat**  
+Content-Type: `application/json`
+
+**Request body example:**
+
+```json
+{
+  "question": "Bonjour"
+}
+
+
+**Example Response:**
+
+```json
+{
+  "answer": "Bonjour ! Comment puis-je vous aider concernant ENSAM Casablanca ?"
+}
+
+### Testing with cURL
+bash
+Copy code
+curl -X POST "http://127.0.0.1:8000/chat" \
+-H "Content-Type: application/json" \
+-d "{\"question\": \"Bonjour\"}"
+##Notes
+-The FastAPI server uses the same vector database and RAG pipeline as the Streamlit app.
+
+-Corpus updates via the scheduled crawler will automatically be reflected in the API responses.
 
 ## Automatic Crawling & Corpus Update
 
@@ -145,7 +197,8 @@ The update runs automatically **every 45 minutes** (for testing purposes).
 
 - **Python 3.10+**  
 - **Streamlit** – Web interface  
-- **LangChain** – RAG pipeline  
+- **LangChain** – RAG pipeline
+- **FastAPI** - FastAPI interface
 - **FAISS** – Similarity search  
 - **HuggingFace Embeddings**  
 - **Google Gemini LLM**  
