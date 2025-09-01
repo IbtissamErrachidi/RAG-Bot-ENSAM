@@ -124,7 +124,9 @@ chat-ensam/
 
 **GET /**
 
-- Returns a simple message to verify the API is running.
+- Returns a simple message to verify the API is running :
+
+<img width="757" height="278" alt="image" src="https://github.com/user-attachments/assets/352aeb5c-7af0-41c2-96dc-95b2e0b2d9b6" />
 
 ### Chat Endpoint
 
@@ -147,6 +149,8 @@ chat-ensam/
   "answer": "Bonjour ! Comment puis-je vous aider concernant ENSAM Casablanca ?"
 }
 ```
+
+
 
 ### Testing with cURL
 ```bash
