@@ -149,7 +149,7 @@ chat-ensam/
 
 ```json
 {
-  "answer": "Bonjour ! Comment puis-je vous aider concernant ENSAM Casablanca ?"
+"answer":"Bonjour ! Je suis l'assistant de l'ENSAM Casablanca, comment puis-je vous aider ?"
 }
 ```
 
