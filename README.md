@@ -150,16 +150,17 @@ Content-Type: `application/json`
 {
   "answer": "Bonjour ! Comment puis-je vous aider concernant ENSAM Casablanca ?"
 }
+```
 
 ### Testing with cURL
-bash
+```bash
 Copy code
 curl -X POST "http://127.0.0.1:8000/chat" \
 -H "Content-Type: application/json" \
 -d "{\"question\": \"Bonjour\"}"
-##Notes
+```
+### Notes
 -The FastAPI server uses the same vector database and RAG pipeline as the Streamlit app.
-
 -Corpus updates via the scheduled crawler will automatically be reflected in the API responses.
 
 ## Automatic Crawling & Corpus Update
