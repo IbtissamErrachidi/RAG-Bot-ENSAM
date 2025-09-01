@@ -97,8 +97,8 @@ chat-ensam/
 - **rag.py** – builds the Gemini-2.5 conversational chain with memory.  
 - **streamlit.py** – Streamlit interface for asking questions and displaying chat history.
 - **update_corpus.py** – manages crawling, chunking, embedding, and replacing corpus.
-- - **crawler.py** – visits ENSAM Casablanca website pages, extracts visible text, replaces PDF/image links with descriptive text, and saves each page as `.txt` files in `infos_txt_new/`.
-  - **app.py** – FastAPI interface to programmatically query the chatbot.
+- **crawler.py** – visits ENSAM Casablanca website pages, extracts visible text, replaces PDF/image links with descriptive text, and saves each page as `.txt` files in `infos_txt_new/`.
+- **app.py** – FastAPI interface to programmatically query the chatbot.
 
 
 
@@ -129,7 +129,8 @@ chat-ensam/
 ### Chat Endpoint
 
 **POST /chat**  
-Content-Type: `application/json`
+
+- Content-Type: `application/json`
 
 **Request body example:**
 
